@@ -1,0 +1,20 @@
+{
+	"schemaVersion": 1,
+	"id": "portalmod",
+	"version": "1.0.0",
+	"name": "Portal Mod",
+	"description": "A simple portal teleportation mod",
+	"authors": ["Restfulbee37"],
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["com.portalmod.PortalMod"]
+	},
+	"mixins": [],
+	"depends": {
+	  "fabricloader": ">=0.14.0",
+	  "fabric-api": "*",
+	  "minecraft": "1.20"
+	}
+  }
+  

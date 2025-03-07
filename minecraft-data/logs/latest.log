@@ -1,0 +1,51 @@
+[20:38:45] [main/INFO]: Loading Minecraft 1.21.4 with Fabric Loader 0.16.10
+[20:38:45] [main/INFO]: Fabric is preparing JARs on first launch, this may take a few seconds...
+[20:38:45] [main/INFO]: Loading 4 mods:
+	- fabricloader 0.16.10
+	   \-- mixinextras 0.4.1
+	- java 21
+	- minecraft 1.21.4
+[20:38:46] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/data/libraries/net/fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[20:38:55] [main/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[20:38:56] [main/INFO]: No existing world data, creating new world
+[20:38:57] [main/INFO]: Loaded 1370 recipes
+[20:38:57] [main/INFO]: Loaded 1481 advancements
+[20:38:57] [Server thread/INFO]: Starting minecraft server version 1.21.4
+[20:38:57] [Server thread/INFO]: Loading properties
+[20:38:57] [Server thread/INFO]: Default game type: CREATIVE
+[20:38:57] [Server thread/INFO]: Generating keypair
+[20:38:57] [Server thread/INFO]: Starting Minecraft server on *:8999
+[20:38:57] [Server thread/INFO]: Using epoll channel type
+[20:38:57] [Server thread/INFO]: Preparing level "world"
+[20:39:04] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[20:39:05] [Worker-Main-6/INFO]: Preparing spawn area: 2%
+[20:39:05] [Worker-Main-7/INFO]: Preparing spawn area: 2%
+[20:39:06] [Worker-Main-3/INFO]: Preparing spawn area: 2%
+[20:39:06] [Worker-Main-3/INFO]: Preparing spawn area: 2%
+[20:39:06] [Worker-Main-2/INFO]: Preparing spawn area: 2%
+[20:39:07] [Worker-Main-5/INFO]: Preparing spawn area: 18%
+[20:39:07] [Worker-Main-3/INFO]: Preparing spawn area: 18%
+[20:39:08] [Worker-Main-6/INFO]: Preparing spawn area: 18%
+[20:39:08] [Worker-Main-4/INFO]: Preparing spawn area: 51%
+[20:39:09] [Worker-Main-2/INFO]: Preparing spawn area: 51%
+[20:39:09] [Worker-Main-7/INFO]: Preparing spawn area: 51%
+[20:39:10] [Worker-Main-1/INFO]: Preparing spawn area: 51%
+[20:39:10] [Server thread/INFO]: Time elapsed: 5935 ms
+[20:39:10] [Server thread/INFO]: Done (13.014s)! For help, type "help"
+[20:39:10] [Server thread/INFO]: Starting remote control listener
+[20:39:10] [Server thread/INFO]: Thread RCON Listener started
+[20:39:10] [Server thread/INFO]: RCON running on 0.0.0.0:25575
+[20:39:59] [RCON Listener #1/INFO]: Thread RCON Client /0:0:0:0:0:0:0:1 started
+[20:39:59] [Server thread/INFO]: [Rcon: Stopping the server]
+[20:39:59] [RCON Client /0:0:0:0:0:0:0:1 #2/INFO]: Thread RCON Client /0:0:0:0:0:0:0:1 shutting down
+[20:39:59] [Server thread/INFO]: Stopping server
+[20:39:59] [Server thread/INFO]: Saving players
+[20:39:59] [Server thread/INFO]: Saving worlds
+[20:39:59] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[20:40:02] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
+[20:40:02] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
+[20:40:02] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[20:40:02] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[20:40:02] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[20:40:02] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[20:40:02] [Server thread/INFO]: Thread RCON Listener stopped

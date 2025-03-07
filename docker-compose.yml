@@ -1,0 +1,34 @@
+services:
+  MCTEST: # Fabric server HARDCORE
+    image: itzg/minecraft-server:latest
+    container_name: MCTEST
+    ports:
+      - "8999:8999"
+    profiles:
+      - minecraft
+    environment:
+      EULA: "TRUE"
+      MODE: "creative"
+      VERSION: "1.21.4"
+      DIFFICULTY: "hard"
+      TYPE: FABRIC
+      SERVER_PORT: 8999
+      MAX_MEMORY: '16G'
+      LEVEL: 'world'
+      INIT_MEMORY: '4G'
+      MOTD: "Test FABRIC"
+      OPS: Restfulbee37
+      SERVER_NAME: "ROCKY FABRIC SERVER"
+      OP_PERMISSION_LEVEL: 4
+      BROADCAST_CONSOLE_TO_OPS: true
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./minecraft-data:/data
+      - ./mods:/mods
+    
+  java-mod:
+    build: ./java
+    container_name: build_mc_mod
+    profiles:
+      - build
