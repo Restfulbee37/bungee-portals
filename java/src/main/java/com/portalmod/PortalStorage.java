@@ -1,10 +1,14 @@
 package com.portalmod;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.math.BlockPos;
+
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.util.math.BlockPos;
 
 public class PortalStorage {
     private static final File file = new File(FabricLoader.getInstance().getConfigDir().toFile(), "portals.json");

@@ -1,7 +1,6 @@
 FROM eclipse-temurin:21-jdk
 
 WORKDIR /java-mod
+COPY . /java-mod/
 
-COPY ./java /java-mod/
-
-RUN ./gradlew build
+RUN ./gradlew build --refresh-dependencies
