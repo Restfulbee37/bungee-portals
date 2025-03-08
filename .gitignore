@@ -1,2 +1,4 @@
 minecraft-data/.fabric/*
 minecraft-data/logs/*
+minecraft-data/*
+!minecraft-data/.gitkeep

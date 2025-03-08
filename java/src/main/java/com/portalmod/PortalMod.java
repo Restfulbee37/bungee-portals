@@ -18,7 +18,9 @@ public class PortalMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        PortalStorage.load(); // Load portals from storage
+        // Load portals from storage when the mod starts
+        portals.putAll(PortalStorage.load());
+
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             PortalCommand.register(dispatcher);
         });
@@ -28,28 +30,13 @@ public class PortalMod implements ModInitializer {
                 Vec3d playerPos = player.getPos();
                 BlockPos blockPos = new BlockPos((int) Math.floor(playerPos.x), (int) Math.floor(playerPos.y), (int) Math.floor(playerPos.z));
 
-                // Debug message: Checking if the player is standing on a portal block
-                player.sendMessage(Text.literal("Checking portal at: " + blockPos), false);
-
                 if (portals.containsKey(blockPos)) {
                     BlockPos destination = portals.get(blockPos);
-                    
                     if (destination != null) {
                         ServerWorld world = (ServerWorld) player.getWorld();
-
-                        // Debug message: Before teleportation
-                        player.sendMessage(Text.literal("Teleporting to: " + destination), false);
-
-                        // Perform teleport
                         player.teleport(world, destination.getX() + 0.5, destination.getY() + 0.1, destination.getZ() + 0.5, Collections.emptySet(), player.getYaw(), player.getPitch(), false);
-
-                        // Debug message: After teleportation
                         player.sendMessage(Text.literal("Teleported successfully!"), false);
-                    } else {
-                        player.sendMessage(Text.literal("Portal destination is NULL!"), false);
                     }
-                } else {
-                    player.sendMessage(Text.literal("No portal found at your location."), false);
                 }
             }
         });

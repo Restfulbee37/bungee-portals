@@ -7,13 +7,16 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;
 
 public class PortalCommand {
-    public static final Map<BlockPos, BlockPos> portals = new HashMap<>();
     public static final Map<String, BlockPos> namedPortals = new HashMap<>();
+    public static final Map<BlockPos, String> portalNames = new HashMap<>(); // Now correctly defined!
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("setportal")
@@ -42,19 +45,21 @@ public class PortalCommand {
                     IntegerArgumentType.getInteger(ctx, "destZ")
                 );
 
-                // Debug message to confirm portal setting
-                ctx.getSource().sendFeedback(() -> Text.literal("Setting portal '" + portalName + "' from (" + x1 + ", " + y1 + ", " + z1 + ") to (" + x2 + ", " + y2 + ", " + z2 + ") -> " + destination), false);
-
-                // Store every block in the portal range
+                // Store all portal blocks & link them to the name
                 for (int x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
                     for (int y = Math.min(y1, y2); y <= Math.max(y1, y2); y++) {
                         for (int z = Math.min(z1, z2); z <= Math.max(z1, z2); z++) {
                             BlockPos portalBlock = new BlockPos(x, y, z);
-                            portals.put(portalBlock, destination);  // Store each portal block in the map
-                            namedPortals.put(portalName, portalBlock);
+                            PortalMod.portals.put(portalBlock, destination);
+                            portalNames.put(portalBlock, portalName); // Store name for deletion
                         }
                     }
                 }
+
+                namedPortals.put(portalName, new BlockPos(x1, y1, z1)); // Store one reference for fast lookup
+
+                // Save portals to file
+                PortalStorage.save(PortalMod.portals);
 
                 ctx.getSource().sendFeedback(() -> Text.literal("Portal '" + portalName + "' successfully set!"), false);
                 return 1;
@@ -64,15 +69,46 @@ public class PortalCommand {
             .then(CommandManager.argument("name", StringArgumentType.string())
             .executes(ctx -> {
                 String portalName = StringArgumentType.getString(ctx, "name");
-                BlockPos portalPos = namedPortals.remove(portalName);
-                
-                if (portalPos != null) {
-                    portals.values().removeIf(name -> name.equals(portalName));
+
+                // Find all blocks linked to this portal name
+                boolean found = false;
+                for (Map.Entry<BlockPos, String> entry : portalNames.entrySet()) {
+                    if (entry.getValue().equals(portalName)) {
+                        PortalMod.portals.remove(entry.getKey());
+                        found = true;
+                    }
+                }
+
+                if (found) {
+                    // Remove the portal from name lookup
+                    namedPortals.remove(portalName);
+                    portalNames.values().removeIf(name -> name.equals(portalName));
+
+                    // Save updated portals
+                    PortalStorage.save(PortalMod.portals);
+
                     ctx.getSource().sendFeedback(() -> Text.literal("Portal '" + portalName + "' removed."), false);
                 } else {
                     ctx.getSource().sendFeedback(() -> Text.literal("No portal found with name: " + portalName), false);
                 }
                 return 1;
             })));
+
+        dispatcher.register(CommandManager.literal("tpme")
+            .then(CommandManager.argument("x", IntegerArgumentType.integer())
+            .then(CommandManager.argument("y", IntegerArgumentType.integer())
+            .then(CommandManager.argument("z", IntegerArgumentType.integer())
+            .executes(ctx -> {
+                int x = IntegerArgumentType.getInteger(ctx, "x");
+                int y = IntegerArgumentType.getInteger(ctx, "y");
+                int z = IntegerArgumentType.getInteger(ctx, "z");
+                
+                ServerPlayerEntity player = ctx.getSource().getPlayer();
+                ServerWorld world = (ServerWorld) player.getWorld();
+
+                player.teleport(world, x + 0.5, y, z + 0.5, Collections.emptySet(), player.getYaw(), player.getPitch(), false);
+                player.sendMessage(Text.literal("Teleported to " + x + ", " + y + ", " + z), false);
+                return 1;
+            })))));
     }
 }
