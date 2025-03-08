@@ -5,9 +5,11 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.particle.ParticleTypes;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,6 +36,10 @@ public class PortalMod implements ModInitializer {
                     BlockPos destination = portals.get(blockPos);
                     if (destination != null) {
                         ServerWorld world = (ServerWorld) player.getWorld();
+
+                        world.spawnParticles(ParticleTypes.PORTAL, player.getX(), player.getY(), player.getZ(), 20, 0.5, 0.5, 0.5, 0.1);
+                        player.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                        
                         player.teleport(world, destination.getX() + 0.5, destination.getY() + 0.1, destination.getZ() + 0.5, Collections.emptySet(), player.getYaw(), player.getPitch(), false);
                         player.sendMessage(Text.literal("Teleported successfully!"), false);
                     }
